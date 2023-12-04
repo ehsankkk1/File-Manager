@@ -81,7 +81,6 @@ class NetworkHelpers {
         }
       }
 
-      ;
       return HelperResponse(
         response: error() ?? response.reasonPhrase ?? "",
         servicesResponse: ServicesResponseStatues.someThingWrong,
@@ -134,12 +133,10 @@ class NetworkHelpers {
       String streamRes = await response.stream.bytesToString();
 
       if (response.statusCode == 200) {
-        if (getStatuesFromResponse(streamRes)) {
-          return HelperResponse(
-            response: streamRes,
-            servicesResponse: ServicesResponseStatues.success,
-          );
-        }
+        return HelperResponse(
+          response: streamRes,
+          servicesResponse: ServicesResponseStatues.success,
+        );
       }
 
       Map<String, dynamic> jsonError = json.decode(streamRes);
@@ -174,13 +171,13 @@ class NetworkHelpers {
         'Accept': 'application/json',
       };
 
-      // if (useUserToken) {
-      //   final userState = globalUserBloc.state;
-      //
-      //   if (userState is UserLoggedState) {
-      //     headers['Authorization'] = "Bearer ${userState.user.accessToken}";
-      //   }
-      // }
+      if (useUserToken) {
+        final userState = globalUserBloc.state;
+
+        if (userState is UserLoggedState) {
+          headers['Authorization'] = "Bearer ${userState.user.token}";
+        }
+      }
 
       var request = http.Request(crud, Uri.parse(EndPoints.kMainUrl + url));
 
@@ -190,13 +187,11 @@ class NetworkHelpers {
 
       String streamRes = await response.stream.bytesToString();
 
-      if (response.statusCode == 200) {
-        if (getStatuesFromResponse(streamRes)) {
-          return HelperResponse(
-            response: streamRes,
-            servicesResponse: ServicesResponseStatues.success,
-          );
-        }
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return HelperResponse(
+          response: streamRes,
+          servicesResponse: ServicesResponseStatues.success,
+        );
       }
 
       Map<String, dynamic> jsonError = json.decode(streamRes);
@@ -208,9 +203,18 @@ class NetworkHelpers {
       //       AppRoutes.welcome, (Route<dynamic> route) => false);
       // }
 
-      String? error = jsonError["message"];
+      String? error() {
+        dynamic tmp = jsonError["message"];
+        if (tmp is String) {
+          return tmp;
+        }
+        if (tmp is List) {
+          return tmp.toString();
+        }
+      }
+
       return HelperResponse(
-        response: error ?? response.reasonPhrase ?? "",
+        response: error() ?? response.reasonPhrase ?? "",
         servicesResponse: ServicesResponseStatues.someThingWrong,
       );
     } on SocketException catch (e) {

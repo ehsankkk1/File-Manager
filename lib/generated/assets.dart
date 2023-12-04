@@ -4,5 +4,6 @@ class Assets {
 
   static const String imagesFolder = 'assets/images/folder.svg';
   static const String imagesProfile = 'assets/images/profile.svg';
+  static const String imagesSearch = 'assets/images/search.svg';
 
 }

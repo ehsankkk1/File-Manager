@@ -35,11 +35,3 @@ const double mapRadius = 200;
 //   return false;
 // }
 
-
-bool getStatuesFromResponse(String streamRes) {
-  Map<String, dynamic> jsonError = json.decode(streamRes);
-  if (jsonError.containsKey("success")) {
-    return jsonError["success"];
-  }
-  return false;
-}
