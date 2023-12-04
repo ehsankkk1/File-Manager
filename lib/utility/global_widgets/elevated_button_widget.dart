@@ -42,7 +42,7 @@ class ElevatedButtonWidget extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.transparent,
             shadowColor: Colors.transparent,
-            foregroundColor: const Color(0xff232323),
+            foregroundColor: AppColors.kMainColor100,
             elevation: 0,
             disabledBackgroundColor: AppColors.kGreyColor,
             animationDuration: const Duration(milliseconds: 250),
