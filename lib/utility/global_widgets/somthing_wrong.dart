@@ -40,13 +40,13 @@ class SomethingWrongWidget extends StatelessWidget {
               if (title == 'Something went wrong !') {
                 return Text(
                   title,
-                  style: AppFontStyles.mediumH2
+                  style: AppFontStyles.mediumH1
                     .copyWith(color: textColor),
                   textAlign: TextAlign.center,
                 );
               }
               return Text(title,
-                  style: AppFontStyles.mediumH4
+                  style: AppFontStyles.mediumH2
                       .copyWith(color: textColor),
                 textAlign: TextAlign.center,
 

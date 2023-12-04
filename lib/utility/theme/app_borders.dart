@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 abstract class AppBorders {
+  static const k0BorderRadius = BorderRadius.all(Radius.circular(0));
   static const k4BorderRadius = BorderRadius.all(Radius.circular(4));
   static const k8BorderRadius = BorderRadius.all(Radius.circular(8));
   static const k9BorderRadius = BorderRadius.all(Radius.circular(9));
