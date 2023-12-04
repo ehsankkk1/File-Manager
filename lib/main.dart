@@ -15,9 +15,6 @@ Future<void> main() async {
   runApp(MyApp(appRouter: AppRouter()),);
 }
 
-class EasyLocalization {
-}
-
 class MyApp extends StatelessWidget {
   AppRouter appRouter;
   MyApp({required this.appRouter,super.key});

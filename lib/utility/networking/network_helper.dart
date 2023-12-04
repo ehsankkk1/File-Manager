@@ -24,7 +24,6 @@ class HelperResponse {
 }
 
 class NetworkHelpers {
-
   static Future<HelperResponse> postDataHelper({
     required String url,
     body = "",
@@ -72,9 +71,19 @@ class NetworkHelpers {
         //     AppRoutes.welcome, (Route<dynamic> route) => false);
       }
 
-      String? error = jsonError["message"];
+      String? error() {
+        dynamic tmp = jsonError["message"];
+        if (tmp is String) {
+          return tmp;
+        }
+        if (tmp is List) {
+          return tmp.toString();
+        }
+      }
+
+      ;
       return HelperResponse(
-        response: error ?? response.reasonPhrase ?? "",
+        response: error() ?? response.reasonPhrase ?? "",
         servicesResponse: ServicesResponseStatues.someThingWrong,
       );
     } on SocketException catch (e) {
@@ -88,7 +97,7 @@ class NetworkHelpers {
     required String url,
     required Map<String, String> body,
     bool useUserToken = false,
-    List<File> files = const[],
+    List<File> files = const [],
     required String name,
   }) async {
     try {
@@ -107,7 +116,7 @@ class NetworkHelpers {
       // }
 
       var request =
-      http.MultipartRequest('POST', Uri.parse(EndPoints.kMainUrl + url));
+          http.MultipartRequest('POST', Uri.parse(EndPoints.kMainUrl + url));
 
       request.headers.addAll(headers);
 
