@@ -8,8 +8,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 
 Future<void> main() async {
-  await initGlobalGetIt();
+  WidgetsFlutterBinding.ensureInitialized();
 
+  await initGlobalGetIt();
   Bloc.observer = MyBlocObserver();
 
   runApp(MyApp(appRouter: AppRouter()),);

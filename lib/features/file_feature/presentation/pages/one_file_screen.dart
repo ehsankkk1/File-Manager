@@ -1,6 +1,13 @@
-import 'package:file_manager/features/file_feature/domain/entities/file_entity.dart';
-import 'package:flutter/material.dart';
+import 'dart:io';
 
+import 'package:file_manager/features/file_feature/domain/entities/file_entity.dart';
+import 'package:file_manager/utility/dialogs_and_snackbars/dialogs_snackBar.dart';
+import 'package:file_manager/utility/global_widgets/elevated_button_widget.dart';
+import 'package:file_manager/utility/networking/endpoints.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../../../../utility/enums.dart';
 import '../../../../utility/theme/color_style.dart';
 import '../../../../utility/theme/text_styles.dart';
@@ -116,7 +123,7 @@ class OneFileScreen extends StatelessWidget {
                 FileActionWidget(
                   title: 'Check Out',
                   onPressed: () {},
-                  icon:getFileEventNameIcon(FileEventName.checkedOut),
+                  icon: getFileEventNameIcon(FileEventName.checkedOut),
                 ),
               ],
             ),
@@ -145,10 +152,36 @@ class OneFileScreen extends StatelessWidget {
             ),
           ),
           SizedBox(
+            height: screenWidth * 0.038,
+          ),
+          ElevatedButtonWidget(
+            title: "Download",
+            onPressed: () async {
+              String? dir = (await getDownloadsDirectory())?.path;
+              await downloadFile(
+                      url: "${EndPoints.kMainUrlAssets}/${fileEntity.link}",
+                      fileName: "1701813257860-528025700.jpeg",
+                      dir: dir ?? "")
+                  .then((value) {
+                if (value) {
+                  DialogsWidgetsSnackBar.showScaffoldSnackBar(
+                      title: "Success in downloads of app data",
+                      color: AppColors.kGreenColor,
+                      context: context);
+                } else {
+                  DialogsWidgetsSnackBar.showScaffoldSnackBar(
+                      title: "Download Failed", context: context);
+                }
+              });
+            },
+          ),
+          SizedBox(
             height: screenWidth * 0.1,
           ),
-          
-          const Text("Files Events",style: AppFontStyles.mediumH1,),
+          const Text(
+            "Files Events",
+            style: AppFontStyles.mediumH1,
+          ),
           SizedBox(
             height: screenWidth * 0.038,
           ),
@@ -163,5 +196,36 @@ class OneFileScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+Future<bool> downloadFile(
+    {required String url,
+    required String fileName,
+    required String dir}) async {
+  HttpClient httpClient = HttpClient();
+  File file;
+  String filePath = '';
+
+  try {
+    await Permission.storage.request();
+
+    var request = await httpClient.getUrl(Uri.parse(url));
+    var response = await request.close();
+    if (response.statusCode == 200) {
+      var bytes = await consolidateHttpClientResponseBytes(response);
+      filePath = '$dir/$fileName';
+      file = File(filePath);
+      await file.writeAsBytes(bytes);
+      print('File downloaded to: $filePath');
+      return true;
+    } else {
+      filePath = 'Error code: ${response.statusCode}';
+      return false;
+    }
+  } catch (ex) {
+    filePath = 'Can not fetch url';
+    print(ex);
+    return false;
   }
 }
