@@ -6,6 +6,7 @@ abstract class AppColors {
   static const Color kSecondColor = Color(0xff4C9CCF);
   static const Color kBackGroundColor = Color(0xffF0F0F0);
   static const Color kWhiteColor = Colors.white;
+  static const Color kPurpleColor = Color(0xffcf4c9c);
 
   static const Color blackColor = Color(0xFF333333);
   static const Color kTextFieldGrey = Color(0xFF666666);

@@ -1,15 +1,16 @@
-import 'package:file_manager/utility/router/app_routes.dart';
+import 'package:file_manager/features/file_feature/domain/entities/file_event_entity.dart';
+import 'package:file_manager/utility/enums.dart';
 import 'package:file_manager/utility/theme/color_style.dart';
 import 'package:file_manager/utility/theme/text_styles.dart';
 import 'package:flutter/material.dart';
-
+import 'package:intl/intl.dart';
 import '../../../../utility/theme/app_borders.dart';
-import '../../domain/entities/file_entity.dart';
 
-class FileItemWidget extends StatelessWidget {
-  FileItemWidget({required this.fileEntity, Key? key, required this.index})
+class FileEventNameWidget extends StatelessWidget {
+  FileEventNameWidget(
+      {required this.fileEventEntity, Key? key, required this.index})
       : super(key: key);
-  FileEntity fileEntity;
+  FileEventEntity fileEventEntity;
   int index;
 
   @override
@@ -23,7 +24,7 @@ class FileItemWidget extends StatelessWidget {
         shadowColor: Colors.transparent,
         foregroundColor: const Color(0xff232323),
         elevation: 0,
-        disabledBackgroundColor: AppColors.kGreyColor,
+        disabledBackgroundColor: AppColors.kWhiteColor,
         shape: const RoundedRectangleBorder(
           borderRadius: AppBorders.k0BorderRadius, // <-- Radius
         ),
@@ -33,10 +34,7 @@ class FileItemWidget extends StatelessWidget {
             top: screenHeight * 0.02,
             bottom: screenHeight * 0.02),
       ),
-      onPressed: () {
-        Navigator.of(context)
-            .pushNamed(AppRoutes.oneFilesScreen, arguments: fileEntity);
-      },
+      onPressed: null,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -44,32 +42,23 @@ class FileItemWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               CircleAvatar(
-                backgroundColor: fileEntity.isAvailable
-                    ? AppColors.kGreenColor
-                    : AppColors.redColor,
+                backgroundColor: AppColors.kPurpleColor,
                 radius: 30,
-                child: const Icon(Icons.file_copy_rounded),
+                child: Icon(getFileEventNameIcon(fileEventEntity.eventName)),
               ),
               SizedBox(
                 width: screenWidth * 0.02,
               ),
               Text(
-                fileEntity.title,
+                eventNameValuesUI.reverse[fileEventEntity.eventName] ?? '',
                 style: AppFontStyles.mediumH3,
               ),
             ],
           ),
-          if (fileEntity.isAvailable)
-            Text(
-              "Available",
-              style:
-                  AppFontStyles.boldH3.copyWith(color: AppColors.kGreenColor),
-            )
-          else
-            Text(
-              "Not Available",
-              style: AppFontStyles.boldH3.copyWith(color: AppColors.redColor),
-            )
+          Text(
+            DateFormat.yMd().add_jms().format(fileEventEntity.createdAt),
+            style: AppFontStyles.regularH4,
+          )
         ],
       ),
     );

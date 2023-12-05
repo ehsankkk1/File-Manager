@@ -2,18 +2,18 @@ import 'package:file_manager/features/file_feature/presentation/widgets/file_lis
 import 'package:file_manager/utility/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 import '../../../../utility/theme/color_style.dart';
-import '../bloc/file_bloc.dart';
+import '../bloc/file_list_bloc/file_bloc.dart';
 
 
-class FileScreen extends StatefulWidget {
-  FileScreen({required this.fileEvent,Key? key}) : super(key: key);
+class FileListScreen extends StatefulWidget {
+  FileListScreen({required this.fileEvent,Key? key}) : super(key: key);
 
   FileEvent fileEvent;
   @override
-  State<FileScreen> createState() => _FileScreenState();
+  State<FileListScreen> createState() => _FileListScreenState();
 }
 
-class _FileScreenState extends State<FileScreen> {
+class _FileListScreenState extends State<FileListScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(

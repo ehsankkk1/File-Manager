@@ -1,4 +1,4 @@
-import 'package:file_manager/features/file_feature/presentation/bloc/file_bloc.dart';
+import 'package:file_manager/features/file_feature/presentation/bloc/file_list_bloc/file_bloc.dart';
 import 'package:file_manager/features/folder/domain/entities/folder_entity.dart';
 import 'package:file_manager/utility/router/app_routes.dart';
 import 'package:file_manager/utility/theme/color_style.dart';
@@ -35,7 +35,7 @@ class FolderItemWidget extends StatelessWidget {
             bottom: screenHeight * 0.02),
       ),
       onPressed: () {
-        Navigator.of(context).pushNamed(AppRoutes.filesScreen,
+        Navigator.of(context).pushNamed(AppRoutes.filesListScreen,
             arguments: GetFilesByFolderIdEvent(folderId: folderEntity.id));
       },
       child: Row(
