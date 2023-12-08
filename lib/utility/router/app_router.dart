@@ -1,4 +1,5 @@
 import 'package:file_manager/features/file_feature/domain/entities/file_entity.dart';
+import 'package:file_manager/features/file_feature/presentation/bloc/file_action_bloc/file_action_bloc.dart';
 import 'package:file_manager/features/file_feature/presentation/bloc/file_list_bloc/file_bloc.dart';
 import 'package:file_manager/features/auth/presentation/pages/login_screen.dart';
 import 'package:file_manager/features/file_feature/presentation/pages/one_file_screen.dart';
@@ -33,7 +34,10 @@ class AppRouter {
 
         case AppRoutes.oneFilesScreen:
           FileEntity args = settings.arguments as FileEntity;
-          return OneFileScreen(fileEntity: args,);
+          return BlocProvider(
+            create: (context) => FileActionBloc(),
+            child: OneFileScreen(fileEntity: args,),
+          );
 
         default:
           return const Scaffold(

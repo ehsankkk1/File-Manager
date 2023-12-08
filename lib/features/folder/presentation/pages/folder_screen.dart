@@ -2,7 +2,7 @@ import 'package:file_manager/features/folder/presentation/widgets/folder_list.da
 import 'package:file_manager/utility/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 import '../../../../utility/theme/color_style.dart';
-import '../bloc/folder_bloc.dart';
+import '../bloc/get_folders_bloc/folder_bloc.dart';
 
 
 class FolderScreen extends StatefulWidget {

@@ -2,14 +2,17 @@ import 'package:file_manager/utility/router/app_routes.dart';
 import 'package:file_manager/utility/theme/color_style.dart';
 import 'package:file_manager/utility/theme/text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../utility/theme/app_borders.dart';
 import '../../domain/entities/file_entity.dart';
+import '../bloc/file_list_bloc/file_bloc.dart';
 
 class FileItemWidget extends StatelessWidget {
-  FileItemWidget({required this.fileEntity, Key? key, required this.index})
+  FileItemWidget({required this.event,required this.fileEntity, Key? key, required this.index})
       : super(key: key);
   FileEntity fileEntity;
+  FileEvent event;
   int index;
 
   @override
@@ -35,7 +38,9 @@ class FileItemWidget extends StatelessWidget {
       ),
       onPressed: () {
         Navigator.of(context)
-            .pushNamed(AppRoutes.oneFilesScreen, arguments: fileEntity);
+            .pushNamed(AppRoutes.oneFilesScreen, arguments: fileEntity)
+            .then((value) => context.read<FileBloc>().add(event)
+        );
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

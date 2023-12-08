@@ -1,5 +1,5 @@
 import 'package:file_manager/features/folder/domain/repositories/folder_repo.dart';
-import 'package:file_manager/features/folder/presentation/bloc/folder_bloc.dart';
+import 'package:file_manager/features/folder/presentation/bloc/get_folders_bloc/folder_bloc.dart';
 
 class GetCanAccessFolderUsecase {
   final FolderRepo folderRepo;

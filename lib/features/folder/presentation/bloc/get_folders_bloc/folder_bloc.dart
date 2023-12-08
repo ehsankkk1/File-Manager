@@ -5,8 +5,8 @@ import 'package:equatable/equatable.dart';
 import 'package:file_manager/features/folder/data/data_sources/folder_datasource.dart';
 import 'package:file_manager/features/folder/data/repositories/folder_repo_impl.dart';
 import 'package:file_manager/features/folder/domain/use_cases/get_canAccess_folder_usecase.dart';
-import '../../../../utility/networking/network_helper.dart';
-import '../../domain/entities/folder_entity.dart';
+import '../../../../../utility/networking/network_helper.dart';
+import '../../../domain/entities/folder_entity.dart';
 
 part 'folder_event.dart';
 part 'folder_state.dart';

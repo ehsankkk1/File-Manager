@@ -66,6 +66,7 @@ class _FileListState extends State<FileList> {
                   child: FileItemWidget(
                     fileEntity: state.files[index],
                     index: index,
+                    event: widget.event,
                   ),
                 );
               }),

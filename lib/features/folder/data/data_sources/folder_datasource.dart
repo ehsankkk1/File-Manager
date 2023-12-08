@@ -1,5 +1,5 @@
 import 'package:file_manager/features/folder/domain/entities/folder_entity.dart';
-import 'package:file_manager/features/folder/presentation/bloc/folder_bloc.dart';
+import 'package:file_manager/features/folder/presentation/bloc/get_folders_bloc/folder_bloc.dart';
 import 'package:file_manager/utility/networking/network_helper.dart';
 
 import '../../../../utility/enums.dart';

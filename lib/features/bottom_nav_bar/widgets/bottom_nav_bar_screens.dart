@@ -1,5 +1,5 @@
 import 'package:file_manager/features/auth/presentation/pages/splash_screen.dart';
-import 'package:file_manager/features/folder/presentation/bloc/folder_bloc.dart';
+import 'package:file_manager/features/folder/presentation/bloc/get_folders_bloc/folder_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

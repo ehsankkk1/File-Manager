@@ -8,6 +8,6 @@ class GetFileByFolderIdUseCase {
   GetFileByFolderIdUseCase(this.fileRepo);
 
   Future call(GetFilesByFolderIdEvent event) async {
-    return await fileRepo.getFileByFolderIdRequest(event);
+    return await fileRepo.getFileByFolderIdRequestRepo(event);
   }
 }

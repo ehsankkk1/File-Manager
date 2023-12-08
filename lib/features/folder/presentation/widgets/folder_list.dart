@@ -7,7 +7,7 @@ import '../../../../generated/assets.dart';
 import '../../../../utility/global_widgets/elevated_button_widget.dart';
 import '../../../../utility/global_widgets/shimmer.dart';
 import '../../../../utility/global_widgets/somthing_wrong.dart';
-import '../bloc/folder_bloc.dart';
+import '../bloc/get_folders_bloc/folder_bloc.dart';
 
 class FolderList extends StatefulWidget {
   FolderList({required this.event,Key? key}) : super(key: key);

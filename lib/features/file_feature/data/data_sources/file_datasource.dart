@@ -1,3 +1,4 @@
+import 'package:file_manager/features/file_feature/presentation/bloc/file_action_bloc/file_action_bloc.dart';
 import 'package:file_manager/features/file_feature/presentation/bloc/file_list_bloc/file_bloc.dart';
 import 'package:file_manager/utility/networking/network_helper.dart';
 
@@ -9,7 +10,7 @@ class FileDataSource {
   FileDataSource(this.networkHelpers);
   NetworkHelpers networkHelpers;
 
-  Future getFilesByFolderId({
+  Future getFilesByFolderIdDataSource({
     required GetFilesByFolderIdEvent event,
   }) async {
     HelperResponse helperResponse = await NetworkHelpers.getDeleteDataHelper(
@@ -26,5 +27,45 @@ class FileDataSource {
       }
     }
     return helperResponse;
+  }
+
+  Future checkInFileDataSource({
+    required SendFileNewActionEvent event,
+  }) async {
+
+    HelperResponse helperResponse = await NetworkHelpers.postDataHelper(
+      crud: "PATCH",
+      url:EndPoints.checkInFile(event.folderId, event.fileId),
+      useUserToken: true,
+    );
+
+    return helperResponse;
+
+  }
+  Future checkOutFileDataSource({
+    required SendFileNewActionEvent event,
+  }) async {
+
+    HelperResponse helperResponse = await NetworkHelpers.postDataHelper(
+      crud: "PATCH",
+      url:EndPoints.checkOutFile(event.folderId, event.fileId),
+      useUserToken: true,
+    );
+
+    return helperResponse;
+
+  }
+  Future deleteFileDataSource({
+    required SendFileNewActionEvent event,
+  }) async {
+
+    HelperResponse helperResponse = await NetworkHelpers.postDataHelper(
+      crud: "DELETE",
+      url:EndPoints.deleteFile(event.folderId, event.fileId),
+      useUserToken: true,
+    );
+
+    return helperResponse;
+
   }
 }

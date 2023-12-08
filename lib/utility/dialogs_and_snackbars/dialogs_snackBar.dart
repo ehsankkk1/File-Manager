@@ -12,6 +12,7 @@ class DialogsWidgetsSnackBar {
     required BuildContext context,
     Color color = AppColors.redColor,
   }) {
+    ScaffoldMessenger.of(context).clearSnackBars();
     ScaffoldMessenger.of(context)
         .showSnackBar(SnackBar(
           behavior: SnackBarBehavior.floating,
@@ -26,17 +27,13 @@ class DialogsWidgetsSnackBar {
           margin: const EdgeInsets.fromLTRB(20, 0, 20, 70),
           backgroundColor: color,
           duration: const Duration(milliseconds: 1500),
-        ))
-        .closed
-        .then((value) {
-      //return ScaffoldMessenger.of(context).clearSnackBars();
-    });
+        ));
   }
 
   static void showSnackBarFromStatus({
     required BuildContext context,
     required HelperResponse helperResponse,
-    bool showServerError = false,
+    bool showServerError = true,
     bool popOnSuccess = true,
     int popOnSuccessCount = 1,
   }) {
