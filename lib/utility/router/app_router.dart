@@ -25,8 +25,13 @@ class AppRouter {
 
         case AppRoutes.filesListScreen:
           FileEvent args = settings.arguments as FileEvent;
-          return BlocProvider(
-            create: (context) => FileBloc(),
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) => FileBloc(),
+              ),
+
+            ],
             child: FileListScreen(
               fileEvent: args,
             ),

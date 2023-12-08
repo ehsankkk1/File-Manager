@@ -26,4 +26,16 @@ class FileRepoImpl extends FileRepo {
   Future deleteFilePatchRequestRepo(SendFileNewActionEvent event) async {
     return await fileDataSource.deleteFileDataSource(event: event);
   }
+
+  @override
+  Future addFilePostRequestRepo(AddEditFileActionEvent event) async {
+    return await fileDataSource.addFileDataSource(event: event);
+
+  }
+
+  @override
+  Future editFilePatchRequestRepo(AddEditFileActionEvent event) async {
+    return await fileDataSource.editFileDataSource(event: event);
+
+  }
 }

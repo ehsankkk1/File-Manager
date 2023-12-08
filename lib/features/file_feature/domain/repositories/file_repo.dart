@@ -8,4 +8,7 @@ abstract class FileRepo {
   Future checkInFilePatchRequestRepo(SendFileNewActionEvent event);
   Future checkOutFilePatchRequestRepo(SendFileNewActionEvent event);
   Future deleteFilePatchRequestRepo(SendFileNewActionEvent event);
+  Future addFilePostRequestRepo(AddEditFileActionEvent event);
+  Future editFilePatchRequestRepo(AddEditFileActionEvent event);
+
 }

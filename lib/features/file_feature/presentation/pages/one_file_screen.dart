@@ -13,6 +13,7 @@ import 'package:permission_handler/permission_handler.dart';
 import '../../../../utility/enums.dart';
 import '../../../../utility/theme/color_style.dart';
 import '../../../../utility/theme/text_styles.dart';
+import '../widgets/add_file_dialog.dart';
 import '../widgets/file_action_widget.dart';
 import '../widgets/file_eventName_widget.dart';
 
@@ -43,12 +44,11 @@ class OneFileScreen extends StatelessWidget {
       ),
       body: BlocListener<FileActionBloc, FileActionState>(
         listener: (context, state) {
-          if(state is FileActionResponseState){
+          if (state is FileActionResponseState) {
             DialogsWidgetsSnackBar.showSnackBarFromStatus(
-                context: context,
-                helperResponse: state.helperResponse,
+              context: context,
+              helperResponse: state.helperResponse,
               popOnSuccess: true,
-              showServerError: true,
             );
           }
         },
@@ -132,7 +132,8 @@ class OneFileScreen extends StatelessWidget {
               builder: (context, state) {
                 if (state is FileActionLoadingState) {
                   return const SizedBox(
-                      height: 200, child: Center(child: CircularProgressIndicator()));
+                      height: 200,
+                      child: Center(child: CircularProgressIndicator()));
                 }
                 return Column(
                   children: [
@@ -170,7 +171,32 @@ class OneFileScreen extends StatelessWidget {
                         children: [
                           FileActionWidget(
                             title: 'Edit',
-                            onPressed: () {},
+                            onPressed: () {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return BlocProvider(
+                                      create: (context) => FileActionBloc(),
+                                      child: BlocListener<FileActionBloc, FileActionState>(
+                                        listener: (context, state) {
+                                          if (state is FileActionResponseState) {
+                                            DialogsWidgetsSnackBar.showSnackBarFromStatus(
+                                              context: context,
+                                              helperResponse: state.helperResponse,
+                                              popOnSuccess: true,
+                                              popBeforeMessage: true
+                                            );
+                                          }
+                                        },
+                                        child: AddFileDialogWidget(
+                                          folderId: fileEntity.folderId,
+                                          fileId: fileEntity.id,
+                                          title: fileEntity.title,
+                                        ),
+                                      ),
+                                    );
+                                  });
+                            },
                             icon: getFileEventNameIcon(FileEventName.updated),
                           ),
                           SizedBox(

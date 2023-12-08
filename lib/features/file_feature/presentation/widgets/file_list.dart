@@ -1,6 +1,3 @@
-
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -78,7 +75,7 @@ class _FileListState extends State<FileList> {
             itemCount: 8,
             itemBuilder: (BuildContext context, int index) {
               return Padding(
-                padding:  EdgeInsets.only(
+                padding: EdgeInsets.only(
                     left: screenWidth * 0.038,
                     right: screenWidth * 0.038,
                     top: screenHeight * 0.02,

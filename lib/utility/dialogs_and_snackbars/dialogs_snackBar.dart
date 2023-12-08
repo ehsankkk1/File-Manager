@@ -35,8 +35,12 @@ class DialogsWidgetsSnackBar {
     required HelperResponse helperResponse,
     bool showServerError = true,
     bool popOnSuccess = true,
+    bool popBeforeMessage = false,
     int popOnSuccessCount = 1,
   }) {
+    if(popBeforeMessage){
+      Navigator.of(context).pop();
+    }
     if (helperResponse.servicesResponse == ServicesResponseStatues.success) {
       if(popOnSuccess){
         for(int i=0;i<popOnSuccessCount;i++){

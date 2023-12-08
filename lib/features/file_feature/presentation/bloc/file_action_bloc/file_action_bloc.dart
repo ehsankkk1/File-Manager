@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:file_manager/features/file_feature/domain/use_cases/add_edit_file_usecase.dart';
 import 'package:file_manager/utility/enums.dart';
 import 'package:file_manager/utility/networking/network_helper.dart';
 
@@ -15,8 +16,8 @@ part 'file_action_state.dart';
 
 class FileActionBloc extends Bloc<FileActionEvent, FileActionState> {
   FileActionBloc() : super(FileActionInitialState()) {
-
-    final FileRepoImpl fileRepoImpl = FileRepoImpl(FileDataSource(NetworkHelpers()));
+    final FileRepoImpl fileRepoImpl =
+        FileRepoImpl(FileDataSource(NetworkHelpers()));
 
     on<SendFileNewActionEvent>((event, emit) async {
       emit(FileActionLoadingState());
@@ -26,7 +27,15 @@ class FileActionBloc extends Bloc<FileActionEvent, FileActionState> {
       final response = await useCase.call(event);
 
       emit(FileActionResponseState(helperResponse: response));
+    });
+    on<AddEditFileActionEvent>((event, emit) async {
+      emit(FileActionLoadingState());
 
+      AddEditFileUseCase useCase = AddEditFileUseCase(fileRepoImpl);
+
+      final response = await useCase.call(event);
+
+      emit(FileActionResponseState(helperResponse: response));
     });
   }
 }

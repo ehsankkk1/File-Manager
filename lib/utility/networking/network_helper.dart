@@ -97,7 +97,8 @@ class NetworkHelpers {
     required Map<String, String> body,
     bool useUserToken = false,
     List<File> files = const [],
-    required String name,
+    String crud = "POST",
+    String keyName = "file",
   }) async {
     try {
       Map<String, String> headers;
@@ -106,16 +107,16 @@ class NetworkHelpers {
         'Accept': 'application/json',
       };
 
-      // if (useUserToken) {
-      //   final userState = globalUserBloc.state;
-      //
-      //   if (userState is UserLoggedState) {
-      //     headers['Authorization'] = "Bearer ${userState.user.accessToken}";
-      //   }
-      // }
+      if (useUserToken) {
+        final userState = globalUserBloc.state;
+
+        if (userState is UserLoggedState) {
+          headers['Authorization'] = "Bearer ${userState.user.token}";
+        }
+      }
 
       var request =
-          http.MultipartRequest('POST', Uri.parse(EndPoints.kMainUrl + url));
+          http.MultipartRequest(crud, Uri.parse(EndPoints.kMainUrl + url));
 
       request.headers.addAll(headers);
 
@@ -124,7 +125,7 @@ class NetworkHelpers {
       if (files.isNotEmpty) {
         for (var element in files) {
           request.files
-              .add(await http.MultipartFile.fromPath(name, element.path));
+              .add(await http.MultipartFile.fromPath(keyName, element.path));
         }
       }
 
@@ -132,7 +133,7 @@ class NetworkHelpers {
 
       String streamRes = await response.stream.bytesToString();
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         return HelperResponse(
           response: streamRes,
           servicesResponse: ServicesResponseStatues.success,
@@ -141,15 +142,18 @@ class NetworkHelpers {
 
       Map<String, dynamic> jsonError = json.decode(streamRes);
 
-      // if (response.statusCode == 401) {
-      //   deleteUserFromLocal();
-      //   globalNavigatorKey.currentState?.pushNamedAndRemoveUntil(
-      //       AppRoutes.welcome, (Route<dynamic> route) => false);
-      // }
+      String? error() {
+        dynamic tmp = jsonError["message"];
+        if (tmp is String) {
+          return tmp;
+        }
+        if (tmp is List) {
+          return tmp.toString();
+        }
+      }
 
-      String? error = jsonError["message"];
       return HelperResponse(
-        response: error ?? response.reasonPhrase ?? "",
+        response: error() ?? response.reasonPhrase ?? "",
         servicesResponse: ServicesResponseStatues.someThingWrong,
       );
     } on SocketException catch (e) {
