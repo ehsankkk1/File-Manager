@@ -84,22 +84,19 @@ class _AddFileDialogWidgetState extends State<AddFileDialogWidget> {
                     return ElevatedButtonWidget(
                       title: 'Save',
                       isLoading: state is FileActionLoadingState,
-                      onPressed: () {
-                        if (filePicked == null && widget.fileId == null) {
-                          return DialogsWidgetsSnackBar.showScaffoldSnackBar(
-                              title: "Add File", context: context);
-                        }
-
-                        context
-                            .read<FileActionBloc>()
-                            .add(AddEditFileActionEvent(
-                              fileEventName: FileEventName.created,
-                              folderId: widget.folderId,
-                              fileId: widget.fileId,
-                              file: filePicked,
-                              title: fileTitleController.text,
-                            ));
-                      },
+                      onPressed: filePicked != null || widget.fileId != null
+                          ? () {
+                              context
+                                  .read<FileActionBloc>()
+                                  .add(AddEditFileActionEvent(
+                                    fileEventName: FileEventName.created,
+                                    folderId: widget.folderId,
+                                    fileId: widget.fileId,
+                                    file: filePicked,
+                                    title: fileTitleController.text,
+                                  ));
+                            }
+                          : null,
                     );
                   },
                 ),
