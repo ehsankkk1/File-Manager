@@ -6,6 +6,10 @@ abstract class FolderEvent extends Equatable {
 
 class GetCanAccessFolderEvent extends FolderEvent{
 
+  @override
+  List<Object?> get props => [];
+}
+class GetMyFolderEvent extends FolderEvent{
 
   @override
   List<Object?> get props => [];

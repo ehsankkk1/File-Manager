@@ -6,6 +6,8 @@ class EndPoints{
   static const String kMainUrlAssets = "http://192.168.108.228:3333";
   static const String login = "/auth/signin";
   static const String folderCanAccess = "/folders/can-access";
+  static const String myFolders = "/folders/my-folders";
+
   static String uploadFile(int folderId) => "/folders/$folderId/files";
   static String editFile(int folderId,int fileId) => "/folders/$folderId/files/$fileId";
 

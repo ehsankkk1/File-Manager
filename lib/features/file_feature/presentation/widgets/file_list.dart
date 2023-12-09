@@ -101,6 +101,7 @@ class _FileListState extends State<FileList> {
             });
       }
       return SomethingWrongWidget(
+        helperResponse: (state as FileErrorState).helperResponse,
         elevatedButtonWidget: ElevatedButtonWidget(
           title: "Refresh",
           onPressed: () {

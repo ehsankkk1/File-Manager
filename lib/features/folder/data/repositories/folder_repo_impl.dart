@@ -12,4 +12,10 @@ class FolderRepoImpl extends FolderRepo {
     return await folderDataSource.getCanAccessFolderData(
         event: getCanAccessFolderEvent);
   }
+
+  @override
+  Future getMyFolder(GetMyFolderEvent getMyFolderEvent) async {
+    return await folderDataSource.getMyFolderData(
+        event: getMyFolderEvent);
+  }
 }

@@ -18,15 +18,15 @@ class GetSelectedScreenByIndex extends StatelessWidget {
           if (screenIndex == 0) {
             return BlocProvider(
               create: (context) => FolderBloc(),
-              child: FolderScreen(),
+              child: FolderScreen(folderEvent: GetCanAccessFolderEvent(),),
             );
           }
-          // if (screenIndex == 1) {
-          //   return BlocProvider(
-          //     create: (context) => GetNearbyPropertiesBloc(),
-          //     child: const MapScreen(),
-          //   );
-          // }
+          if (screenIndex == 1) {
+            return BlocProvider(
+              create: (context) => FolderBloc(),
+              child: FolderScreen(folderEvent: GetMyFolderEvent(),),
+            );
+          }
           // if (screenIndex == 2) {
           //   return const WelcomeStep();
           // }

@@ -1,21 +1,24 @@
+import 'package:file_manager/utility/networking/network_helper.dart';
 import 'package:file_manager/utility/theme/color_style.dart';
 import 'package:file_manager/utility/theme/text_styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../generated/assets.dart';
 import 'elevated_button_widget.dart';
 
 class SomethingWrongWidget extends StatelessWidget {
-  SomethingWrongWidget({
-      this.textColor = AppColors.blackColor,
+  SomethingWrongWidget(
+      {this.textColor = AppColors.blackColor,
       this.title = 'Something went wrong !',
-      this.svgPath = "assets/images/no-internet.svg",
+      this.svgPath = Assets.imagesNoInternet,
+      this.helperResponse,
       this.elevatedButtonWidget,
-      Key? key
-      })
+      Key? key})
       : super(key: key);
   String title;
   String svgPath;
   ElevatedButtonWidget? elevatedButtonWidget;
+  HelperResponse? helperResponse;
   Color textColor;
   @override
   Widget build(BuildContext context) {
@@ -40,23 +43,25 @@ class SomethingWrongWidget extends StatelessWidget {
               if (title == 'Something went wrong !') {
                 return Text(
                   title,
-                  style: AppFontStyles.mediumH1
-                    .copyWith(color: textColor),
+                  style: AppFontStyles.mediumH1.copyWith(color: textColor),
                   textAlign: TextAlign.center,
                 );
               }
-              return Text(title,
-                  style: AppFontStyles.mediumH2
-                      .copyWith(color: textColor),
+              return Text(
+                title,
+                style: AppFontStyles.mediumH2.copyWith(color: textColor),
                 textAlign: TextAlign.center,
-
               );
             }),
+            if (helperResponse != null)
+              Text(
+                helperResponse!.response,
+                style: AppFontStyles.mediumH1.copyWith(color: textColor),
+                textAlign: TextAlign.center,
+              ),
             Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal: getWidth * 0.2,
-                  vertical: getWidth * 0.05
-              ),
+                  horizontal: getWidth * 0.2, vertical: getWidth * 0.05),
               child: elevatedButtonWidget ?? const SizedBox(),
             ),
           ],

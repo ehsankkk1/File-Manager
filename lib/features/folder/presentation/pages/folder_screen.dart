@@ -4,10 +4,9 @@ import 'package:flutter/material.dart';
 import '../../../../utility/theme/color_style.dart';
 import '../bloc/get_folders_bloc/folder_bloc.dart';
 
-
 class FolderScreen extends StatefulWidget {
-  FolderScreen({Key? key}) : super(key: key);
-
+  FolderScreen({required this.folderEvent, Key? key}) : super(key: key);
+  FolderEvent folderEvent;
   @override
   State<FolderScreen> createState() => _FolderScreenState();
 }
@@ -17,16 +16,18 @@ class _FolderScreenState extends State<FolderScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-          backgroundColor: AppColors.kBackGroundColor,
-          appBar: AppBar(
-            backgroundColor: AppColors.kSecondColor,
-            title: Text(
-              "Can Access Folders",
-              style: AppFontStyles.boldH2
-                  .copyWith(color: AppColors.kBackGroundColor),
-            ),
-          ),
-          body: FolderList(event: GetCanAccessFolderEvent()),
-        ));
+      backgroundColor: AppColors.kBackGroundColor,
+      appBar: AppBar(
+        backgroundColor: AppColors.kSecondColor,
+        title: Text(
+          widget.folderEvent is GetCanAccessFolderEvent
+              ? "Can Access Folders"
+              : "My Folders",
+          style:
+              AppFontStyles.boldH2.copyWith(color: AppColors.kBackGroundColor),
+        ),
+      ),
+      body: FolderList(event: widget.folderEvent),
+    ));
   }
 }

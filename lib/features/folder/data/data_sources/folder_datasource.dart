@@ -27,4 +27,23 @@ class FolderDataSource {
     }
     return helperResponse;
   }
+
+  Future getMyFolderData({
+    required GetMyFolderEvent event,
+  }) async {
+    HelperResponse helperResponse = await NetworkHelpers.getDeleteDataHelper(
+      url: EndPoints.myFolders,
+      useUserToken: true,
+    );
+    if (helperResponse.servicesResponse == ServicesResponseStatues.success) {
+      try {
+        return folderEntityFromJson(helperResponse.response);
+      } catch (e) {
+        return helperResponse.copyWith(
+          servicesResponse: ServicesResponseStatues.modelError,
+        );
+      }
+    }
+    return helperResponse;
+  }
 }
