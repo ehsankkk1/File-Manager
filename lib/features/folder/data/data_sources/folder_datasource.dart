@@ -2,10 +2,10 @@ import 'package:file_manager/features/folder/domain/entities/folder_entity.dart'
 import 'package:file_manager/features/folder/presentation/bloc/folder_users_bloc/folder_users_bloc.dart';
 import 'package:file_manager/features/folder/presentation/bloc/get_folders_bloc/folder_bloc.dart';
 import 'package:file_manager/utility/networking/network_helper.dart';
-
 import '../../../../utility/enums.dart';
 import '../../../../utility/networking/endpoints.dart';
 import '../../../auth/domain/entities/user_entity.dart';
+import '../../presentation/bloc/folder_action_bloc/folder_new_action_bloc.dart';
 
 class FolderDataSource {
   FolderDataSource(this.networkHelpers);
@@ -65,6 +65,39 @@ class FolderDataSource {
         );
       }
     }
+    return helperResponse;
+  }
+
+  Future deleteFolder({
+    required SendFolderActionEvent event,
+  }) async {
+    HelperResponse helperResponse = await NetworkHelpers.getDeleteDataHelper(
+        url: EndPoints.deleteFolder(event.folderId),
+        useUserToken: true,
+        crud: "DELETE");
+
+    return helperResponse;
+  }
+
+  Future addUserToFolder({
+    required SendFolderActionEvent event,
+  }) async {
+    HelperResponse helperResponse = await NetworkHelpers.postDataHelper(
+      url: EndPoints.addUserFromFolder(event.folderId, event.email!),
+      useUserToken: true,
+    );
+
+    return helperResponse;
+  }
+
+  Future removeUserFromFolder({
+    required SendFolderActionEvent event,
+  }) async {
+    HelperResponse helperResponse = await NetworkHelpers.getDeleteDataHelper(
+        url: EndPoints.removeUserFromFolder(event.folderId, event.userId!),
+        useUserToken: true,
+        crud: "DELETE");
+
     return helperResponse;
   }
 }

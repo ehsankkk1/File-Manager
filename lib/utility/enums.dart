@@ -18,6 +18,13 @@ enum FileEventName{
   checkedIn,
   checkedOut,
 }
+enum FolderEventName{
+  updated,
+  deleted,
+  created,
+  add,
+  remove,
+}
 
 final EnumValues serviceValues = EnumValues({
   "Sent Successfully": ServicesResponseStatues.success,

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 User userFromJson(String str) => User.fromJson(json.decode(str));
+List<User> userListFromJson(String str) => List<User>.from(json.decode(str).map((x) => User.fromJson(x)));
 
 String userToJson(User data) => json.encode(data.toJson());
 
@@ -20,7 +21,7 @@ class User {
   });
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-        userId: json["userId"] ?? 0,
+        userId: json["id"] ?? 0,
         email: json["email"] ?? '',
         token: json["token"] ?? '',
         fullName: json["fullName"] ?? '',
@@ -28,7 +29,7 @@ class User {
       );
 
   Map<String, dynamic> toJson() => {
-        "userId": userId,
+        "id": userId,
         "email": email,
         "token": token,
         "isAdmin": isAdmin,

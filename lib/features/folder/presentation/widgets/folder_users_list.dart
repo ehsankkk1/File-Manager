@@ -1,4 +1,6 @@
+import 'package:file_manager/features/folder/presentation/bloc/folder_action_bloc/folder_new_action_bloc.dart';
 import 'package:file_manager/features/folder/presentation/widgets/folder_user_item.dart';
+import 'package:file_manager/utility/dialogs_and_snackbars/dialogs_snackBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -34,11 +36,12 @@ class _FileListState extends State<FolderUsersList> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
-    return BlocBuilder<FolderUsersBloc, FolderUsersState>(builder: (context, state) {
+    return BlocBuilder<FolderUsersBloc, FolderUsersState>(
+        builder: (context, state) {
       if (state is FolderUsersDoneState) {
         if (state.users.isEmpty) {
           return SomethingWrongWidget(
-            title: "No Files found !",
+            title: "No Users found !",
             svgPath: Assets.imagesSearch,
             elevatedButtonWidget: ElevatedButtonWidget(
               title: "Refresh",
@@ -60,10 +63,33 @@ class _FileListState extends State<FolderUsersList> {
                   onRefresh: () async {
                     search();
                   },
-                  child: FolderUserItemWidget(
-                    user: state.users[index],
-                    index: index,
-                    event: widget.event,
+                  child: BlocProvider(
+                    create: (context) => FolderActionBloc(),
+                    child: BlocListener<FolderActionBloc, FolderActionState>(
+                      listener: (context, state) {
+                       if(state is FolderActionResponseState){
+                         DialogsWidgetsSnackBar.showSnackBarFromStatus(
+                             context: context,
+                             helperResponse: state.helperResponse,
+                           popOnSuccess: true,
+                         );
+                       }
+                      },
+                      child: BlocBuilder<FolderActionBloc, FolderActionState>(
+                        builder: (context, actionState) {
+                          if (actionState is FolderActionLoadingState) {
+                            return const SizedBox(
+                                height: 100,
+                                child: CircularProgressIndicator());
+                          }
+                          return FolderUserItemWidget(
+                            user: state.users[index],
+                            index: index,
+                            event: widget.event,
+                          );
+                        },
+                      ),
+                    ),
                   ),
                 );
               }),

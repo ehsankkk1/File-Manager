@@ -1,12 +1,16 @@
+import 'package:file_manager/features/folder/presentation/bloc/folder_action_bloc/folder_new_action_bloc.dart';
 import 'package:file_manager/features/folder/presentation/bloc/folder_users_bloc/folder_users_bloc.dart';
+import 'package:file_manager/utility/enums.dart';
 import 'package:file_manager/utility/theme/color_style.dart';
 import 'package:file_manager/utility/theme/text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../utility/theme/app_borders.dart';
 import '../../../auth/domain/entities/user_entity.dart';
 
 class FolderUserItemWidget extends StatelessWidget {
-  FolderUserItemWidget({required this.event,required this.user, Key? key, required this.index})
+  FolderUserItemWidget(
+      {required this.event, required this.user, Key? key, required this.index})
       : super(key: key);
   User user;
   FolderUsersEvent event;
@@ -33,9 +37,7 @@ class FolderUserItemWidget extends StatelessWidget {
             top: screenHeight * 0.02,
             bottom: screenHeight * 0.02),
       ),
-      onPressed: () {
-
-      },
+      onPressed: () {},
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -56,6 +58,21 @@ class FolderUserItemWidget extends StatelessWidget {
               ),
             ],
           ),
+          IconButton(
+              onPressed: () {
+                print("Folder Id");
+                print((event as GetFolderUsersEvent).folderId);
+                print(user.userId);
+                context.read<FolderActionBloc>().add(SendFolderActionEvent(
+                      folderEventName: FolderEventName.remove,
+                      folderId: (event as GetFolderUsersEvent).folderId,
+                      userId: user.userId,
+                    ));
+              },
+              icon: const Icon(
+                Icons.delete,
+                color: AppColors.redColor,
+              ))
           // if (user.isAvailable)
           //   Text(
           //     "Available",
