@@ -8,6 +8,7 @@ class AppRoutes {
   static const String filesListScreen = "/file_screen";
   static const String oneFilesScreen = "/one_file_screen";
   static const String bottomNavBarScreen = "/bottom_nav_bar_screen";
+  static const String folderUsers = "/folder-users";
 
 
 }

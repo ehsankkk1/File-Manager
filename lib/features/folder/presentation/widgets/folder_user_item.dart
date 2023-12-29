@@ -1,21 +1,16 @@
-import 'package:file_manager/features/file_feature/presentation/bloc/file_list_bloc/file_bloc.dart';
-import 'package:file_manager/features/folder/domain/entities/folder_entity.dart';
 import 'package:file_manager/features/folder/presentation/bloc/folder_users_bloc/folder_users_bloc.dart';
-import 'package:file_manager/utility/router/app_routes.dart';
 import 'package:file_manager/utility/theme/color_style.dart';
 import 'package:file_manager/utility/theme/text_styles.dart';
 import 'package:flutter/material.dart';
-
 import '../../../../utility/theme/app_borders.dart';
-import '../bloc/get_folders_bloc/folder_bloc.dart';
+import '../../../auth/domain/entities/user_entity.dart';
 
-class FolderItemWidget extends StatelessWidget {
-  FolderItemWidget({required this.event,required this.folderEntity, Key? key, required this.index})
+class FolderUserItemWidget extends StatelessWidget {
+  FolderUserItemWidget({required this.event,required this.user, Key? key, required this.index})
       : super(key: key);
-  FolderEntity folderEntity;
+  User user;
+  FolderUsersEvent event;
   int index;
-  FolderEvent event;
-
 
   @override
   Widget build(BuildContext context) {
@@ -39,30 +34,39 @@ class FolderItemWidget extends StatelessWidget {
             bottom: screenHeight * 0.02),
       ),
       onPressed: () {
-        if(event is GetMyFolderEvent){
-          Navigator.of(context).pushNamed(AppRoutes.folderUsers,
-              arguments: GetFolderUsersEvent(folderId: folderEntity.id)
-          );
-        }else{
-          Navigator.of(context).pushNamed(AppRoutes.filesListScreen,
-              arguments: GetFilesByFolderIdEvent(folderId: folderEntity.id));
-        }
+
       },
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const CircleAvatar(
-            backgroundColor: AppColors.kSecondColor,
-            radius: 30,
-            child: Icon(Icons.folder_copy_outlined),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const CircleAvatar(
+                backgroundColor: Colors.amber,
+                radius: 30,
+                child: Icon(Icons.person),
+              ),
+              SizedBox(
+                width: screenWidth * 0.02,
+              ),
+              Text(
+                user.email,
+                style: AppFontStyles.mediumH3,
+              ),
+            ],
           ),
-          SizedBox(
-            width: screenWidth * 0.02,
-          ),
-          Text(
-            folderEntity.title,
-            style: AppFontStyles.mediumH3,
-          ),
+          // if (user.isAvailable)
+          //   Text(
+          //     "Available",
+          //     style:
+          //     AppFontStyles.boldH3.copyWith(color: AppColors.kGreenColor),
+          //   )
+          // else
+          //   Text(
+          //     "Not Available",
+          //     style: AppFontStyles.boldH3.copyWith(color: AppColors.redColor),
+          //   )
         ],
       ),
     );

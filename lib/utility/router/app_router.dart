@@ -3,6 +3,8 @@ import 'package:file_manager/features/file_feature/presentation/bloc/file_action
 import 'package:file_manager/features/file_feature/presentation/bloc/file_list_bloc/file_bloc.dart';
 import 'package:file_manager/features/auth/presentation/pages/login_screen.dart';
 import 'package:file_manager/features/file_feature/presentation/pages/one_file_screen.dart';
+import 'package:file_manager/features/folder/presentation/bloc/folder_users_bloc/folder_users_bloc.dart';
+import 'package:file_manager/features/folder/presentation/pages/folder_access_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../features/bottom_nav_bar/bottom_nav_bar.dart';
@@ -30,7 +32,6 @@ class AppRouter {
               BlocProvider(
                 create: (context) => FileBloc(),
               ),
-
             ],
             child: FileListScreen(
               fileEvent: args,
@@ -41,7 +42,18 @@ class AppRouter {
           FileEntity args = settings.arguments as FileEntity;
           return BlocProvider(
             create: (context) => FileActionBloc(),
-            child: OneFileScreen(fileEntity: args,),
+            child: OneFileScreen(
+              fileEntity: args,
+            ),
+          );
+
+        case AppRoutes.folderUsers:
+          FolderUsersEvent args = settings.arguments as FolderUsersEvent;
+          return BlocProvider(
+            create: (context) => FolderUsersBloc(),
+            child: FolderUsersScreen(
+              folderUsersEvent: args,
+            ),
           );
 
         default:
