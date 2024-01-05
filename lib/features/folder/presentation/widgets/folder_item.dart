@@ -5,17 +5,23 @@ import 'package:file_manager/utility/router/app_routes.dart';
 import 'package:file_manager/utility/theme/color_style.dart';
 import 'package:file_manager/utility/theme/text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../utility/enums.dart';
 import '../../../../utility/theme/app_borders.dart';
+import '../bloc/folder_action_bloc/folder_new_action_bloc.dart';
 import '../bloc/get_folders_bloc/folder_bloc.dart';
 
 class FolderItemWidget extends StatelessWidget {
-  FolderItemWidget({required this.event,required this.folderEntity, Key? key, required this.index})
+  FolderItemWidget(
+      {required this.event,
+      required this.folderEntity,
+      Key? key,
+      required this.index})
       : super(key: key);
   FolderEntity folderEntity;
   int index;
   FolderEvent event;
-
 
   @override
   Widget build(BuildContext context) {
@@ -39,30 +45,50 @@ class FolderItemWidget extends StatelessWidget {
             bottom: screenHeight * 0.02),
       ),
       onPressed: () {
-        if(event is GetMyFolderEvent){
+        if (event is GetMyFolderEvent) {
           Navigator.of(context).pushNamed(AppRoutes.folderUsers,
-              arguments: GetFolderUsersEvent(folderId: folderEntity.id)
-          );
-        }else{
+              arguments: GetFolderUsersEvent(folderId: folderEntity.id));
+        } else {
           Navigator.of(context).pushNamed(AppRoutes.filesListScreen,
               arguments: GetFilesByFolderIdEvent(folderId: folderEntity.id));
         }
       },
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const CircleAvatar(
-            backgroundColor: AppColors.kSecondColor,
-            radius: 30,
-            child: Icon(Icons.folder_copy_outlined),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              CircleAvatar(
+                backgroundColor: event is GetMyFolderEvent
+                    ? AppColors.kOrangeWidgetColor
+                    : AppColors.kSecondColor,
+                radius: 30,
+                child: Icon(event is GetMyFolderEvent
+                    ? Icons.folder_shared_rounded
+                    : Icons.folder_copy_outlined),
+              ),
+              SizedBox(
+                width: screenWidth * 0.02,
+              ),
+              Text(
+                folderEntity.title,
+                style: AppFontStyles.mediumH3,
+              ),
+            ],
           ),
-          SizedBox(
-            width: screenWidth * 0.02,
-          ),
-          Text(
-            folderEntity.title,
-            style: AppFontStyles.mediumH3,
-          ),
+          if (event is GetMyFolderEvent)
+            IconButton(
+                onPressed: () {
+                  context.read<FolderActionBloc>().add(SendFolderActionEvent(
+                        folderEventName: FolderEventName.deleted,
+                        folderId: folderEntity.id,
+                      ));
+                },
+                icon: const Icon(
+                  Icons.delete,
+                  color: AppColors.redColor,
+                ))
         ],
       ),
     );

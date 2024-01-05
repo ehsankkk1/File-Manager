@@ -1,8 +1,10 @@
+import 'package:file_manager/features/folder/presentation/bloc/folder_action_bloc/folder_new_action_bloc.dart';
 import 'package:file_manager/features/folder/presentation/widgets/folder_item.dart';
 import 'package:file_manager/utility/theme/color_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../generated/assets.dart';
+import '../../../../utility/dialogs_and_snackbars/dialogs_snackBar.dart';
 import '../../../../utility/global_widgets/elevated_button_widget.dart';
 import '../../../../utility/global_widgets/shimmer.dart';
 import '../../../../utility/global_widgets/somthing_wrong.dart';
@@ -59,10 +61,32 @@ class _FolderListState extends State<FolderList> {
                   onRefresh: () async {
                     search();
                   },
-                  child: FolderItemWidget(
-                    folderEntity: state.folders[index],
-                    index: index,
-                    event: widget.event,
+                  child: BlocProvider(
+                    create: (context) => FolderActionBloc(),
+                    child: BlocListener<FolderActionBloc, FolderActionState>(
+                      listener: (context, state) {
+                        if (state is FolderActionResponseState) {
+                          DialogsWidgetsSnackBar.showSnackBarFromStatus(
+                            context: context,
+                            helperResponse: state.helperResponse,
+                          );
+                        }
+                      },
+                      child: BlocBuilder<FolderActionBloc, FolderActionState>(
+                        builder: (context, actionState) {
+                          if (actionState is FolderActionLoadingState) {
+                            return const SizedBox(
+                                height: 100,
+                                child: CircularProgressIndicator());
+                          }
+                          return FolderItemWidget(
+                            folderEntity: state.folders[index],
+                            index: index,
+                            event: widget.event,
+                          );
+                        },
+                      ),
+                    ),
                   ),
                 );
               }),

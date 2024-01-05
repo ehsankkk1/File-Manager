@@ -3,8 +3,8 @@ class EndPoints{
 
   // my wifi ip address
 
-  static const String kMainUrl = "http://192.168.134.228:3333";
-  static const String kMainUrlAssets = "http://192.168.134.228:3333";
+  static const String kMainUrl = "http://192.168.1.44:3333";
+  static const String kMainUrlAssets = "http://192.168.1.44:3333";
   static const String login = "/auth/signin";
   static const String folderCanAccess = "/folders/can-access";
   static const String myFolders = "/folders/my-folders";

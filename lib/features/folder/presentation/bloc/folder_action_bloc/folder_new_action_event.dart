@@ -8,7 +8,7 @@ class SendFolderActionEvent extends FolderActionNewEvent {
   SendFolderActionEvent({
     required this.folderEventName,
     required this.folderId,
-    required this.userId,
+    this.userId,
     this.email,
   });
   FolderEventName folderEventName;
