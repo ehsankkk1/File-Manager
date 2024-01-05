@@ -27,17 +27,27 @@ class FolderRepoImpl extends FolderRepo {
   }
 
   @override
-  Future addUserFolderPostRequestRepo(SendFolderActionEvent sendFolderNewActionEvent) async {
-    return await folderDataSource.addUserToFolder(event: sendFolderNewActionEvent);
+  Future addUserFolderPostRequestRepo(
+      SendFolderActionEvent sendFolderNewActionEvent) async {
+    return await folderDataSource.addUserToFolder(
+        event: sendFolderNewActionEvent);
   }
 
   @override
-  Future deleteFolderDeleteRequestRepo(SendFolderActionEvent sendFolderNewActionEvent) async {
+  Future deleteFolderDeleteRequestRepo(
+      SendFolderActionEvent sendFolderNewActionEvent) async {
     return await folderDataSource.deleteFolder(event: sendFolderNewActionEvent);
   }
 
   @override
-  Future removeUserFolderDeleteRequestRepo(SendFolderActionEvent sendFolderNewActionEvent) async {
-    return await folderDataSource.removeUserFromFolder(event: sendFolderNewActionEvent);
+  Future removeUserFolderDeleteRequestRepo(
+      SendFolderActionEvent sendFolderNewActionEvent) async {
+    return await folderDataSource.removeUserFromFolder(
+        event: sendFolderNewActionEvent);
+  }
+
+  @override
+  Future postNewFolderRequestRepo(AddFolderEvent addFolderEvent) async {
+    return await folderDataSource.addNewFolder(event: addFolderEvent);
   }
 }

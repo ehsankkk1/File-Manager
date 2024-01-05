@@ -36,21 +36,20 @@ class FileDataSource {
         url: EndPoints.uploadFile(event.folderId),
         useUserToken: true,
         body: {"title": event.title},
-        files: event.file != null ?[event.file!] : []
-    );
+        files: event.file != null ? [event.file!] : []);
 
     return helperResponse;
   }
+
   Future editFileDataSource({
     required AddEditFileActionEvent event,
   }) async {
     HelperResponse helperResponse = await NetworkHelpers.postDataWithFile(
         crud: "PATCH",
-        url: EndPoints.editFile(event.folderId,event.fileId!),
+        url: EndPoints.editFile(event.folderId, event.fileId!),
         useUserToken: true,
         body: {"title": event.title},
-        files: event.file != null ?[event.file!] : []
-    );
+        files: event.file != null ? [event.file!] : []);
 
     return helperResponse;
   }

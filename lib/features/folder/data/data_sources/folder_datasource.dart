@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:file_manager/features/folder/domain/entities/folder_entity.dart';
 import 'package:file_manager/features/folder/presentation/bloc/folder_users_bloc/folder_users_bloc.dart';
 import 'package:file_manager/features/folder/presentation/bloc/get_folders_bloc/folder_bloc.dart';
@@ -86,6 +88,17 @@ class FolderDataSource {
       url: EndPoints.addUserFromFolder(event.folderId, event.email!),
       useUserToken: true,
     );
+
+    return helperResponse;
+  }
+
+  Future addNewFolder({
+    required AddFolderEvent event,
+  }) async {
+    HelperResponse helperResponse = await NetworkHelpers.postDataHelper(
+        url: EndPoints.addNewFolder,
+        useUserToken: true,
+        body: json.encode({"name": event.title}));
 
     return helperResponse;
   }

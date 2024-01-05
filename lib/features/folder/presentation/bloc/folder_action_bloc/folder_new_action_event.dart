@@ -16,14 +16,12 @@ class SendFolderActionEvent extends FolderActionNewEvent {
   int? userId;
   String? email;
   @override
-  List<Object?> get props => [folderEventName, folderId, userId,email];
+  List<Object?> get props => [folderEventName, folderId, userId, email];
 }
 
-class AddFolderActionEvent extends FolderActionNewEvent {
-  AddFolderActionEvent(
-      {required this.folderEventName, required this.title});
-  FolderEventName folderEventName;
+class AddFolderEvent extends FolderActionNewEvent {
+  AddFolderEvent({required this.title});
   String title;
   @override
-  List<Object?> get props => [folderEventName, title];
+  List<Object?> get props => [title];
 }

@@ -10,4 +10,5 @@ abstract class FolderRepo{
   Future removeUserFolderDeleteRequestRepo(SendFolderActionEvent sendFolderNewActionEvent);
   Future addUserFolderPostRequestRepo(SendFolderActionEvent sendFolderNewActionEvent);
   Future deleteFolderDeleteRequestRepo(SendFolderActionEvent sendFolderNewActionEvent);
+  Future postNewFolderRequestRepo(AddFolderEvent addFolderEvent);
 }
