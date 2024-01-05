@@ -69,15 +69,20 @@ class _FolderListState extends State<FolderList> {
                           DialogsWidgetsSnackBar.showSnackBarFromStatus(
                             context: context,
                             helperResponse: state.helperResponse,
+                            popOnSuccess: false
                           );
+                          search();
                         }
                       },
                       child: BlocBuilder<FolderActionBloc, FolderActionState>(
                         builder: (context, actionState) {
                           if (actionState is FolderActionLoadingState) {
-                            return const SizedBox(
-                                height: 100,
-                                child: CircularProgressIndicator());
+                            return const Center(
+                              child: SizedBox(
+                                  height: 100,
+                                  width: 100,
+                                  child: CircularProgressIndicator()),
+                            );
                           }
                           return FolderItemWidget(
                             folderEntity: state.folders[index],
