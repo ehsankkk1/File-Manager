@@ -3,6 +3,7 @@ import 'package:file_manager/features/folder/presentation/bloc/get_folders_bloc/
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../auth/presentation/pages/profile_screen.dart';
 import '../../folder/presentation/pages/folder_screen.dart';
 
 
@@ -27,15 +28,10 @@ class GetSelectedScreenByIndex extends StatelessWidget {
               child: FolderScreen(folderEvent: GetMyFolderEvent(),),
             );
           }
-          // if (screenIndex == 2) {
-          //   return const WelcomeStep();
-          // }
-          // if (screenIndex == 3) {
-          //   return const FavoriteScreen();
-          // }
-          // if (screenIndex == 4) {
-          //   return const MoreScreen();
-          // }
+          if (screenIndex == 2) {
+            return const ProfileScreen();
+          }
+
           return const Scaffold(
             body: Center(
               child: Text(

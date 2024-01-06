@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:shared_preferences/shared_preferences.dart';
+
 import '../../../../utility/enums.dart';
 import '../../../../utility/networking/endpoints.dart';
 import '../../../../utility/networking/network_helper.dart';
@@ -10,6 +12,28 @@ class UserDataSource{
 
   UserDataSource(this.networkHelpers);
   final NetworkHelpers networkHelpers;
+
+  Future<User?> getUserFromLocalStorage() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? localUser = prefs.getString("user");
+    if (localUser == null) {
+      return null;
+    }
+    User userFromLocal = User.fromJson(json.decode(localUser));
+
+    return userFromLocal;
+  }
+
+  Future saveUserToLocalStorage(User user) async {
+    String userString = json.encode(user.toJson());
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString("user", userString);
+  }
+
+  Future deleteUserFromLocal() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.remove("user");
+  }
 
   Future loginUserDataSource(LoginUserEvent loginUserEvent) async {
     HelperResponse helperResponse = await NetworkHelpers.postDataHelper(

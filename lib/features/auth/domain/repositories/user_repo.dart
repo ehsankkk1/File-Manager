@@ -1,8 +1,11 @@
-
-
 import 'package:file_manager/features/auth/presentation/bloc/user/user_bloc.dart';
 
-abstract class UserRepo{
+import '../entities/user_entity.dart';
+
+abstract class UserRepo {
   Future login(LoginUserEvent loginUserEvent);
   Future logout();
+  Future saveUserLocalRepo(User user);
+  Future removeUserFromLocalRepo();
+  Future getUserFromLocalRepo();
 }

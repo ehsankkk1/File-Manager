@@ -3,6 +3,9 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:file_manager/features/auth/data/repositories/user_repo_impl.dart';
+import 'package:file_manager/features/auth/domain/use_cases/get_user_from_local_usecase.dart';
+import 'package:file_manager/features/auth/domain/use_cases/remove_user_from_local_usecase.dart';
+import 'package:file_manager/features/auth/domain/use_cases/save_user_local_usecase.dart';
 
 import '../../../../../utility/networking/network_helper.dart';
 import '../../../data/data_sources/user_datasource.dart';
@@ -17,6 +20,20 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       UserRepoImpl(UserDataSource(NetworkHelpers()));
 
   UserBloc() : super(UserInit()) {
+    on<CheckUserFromLocalStorage>((event, emit) async {
+      GetUserFromLocalUsecase getUserFromLocalUsecase =
+          GetUserFromLocalUsecase(userRepoImpl);
+      final user = await getUserFromLocalUsecase.call();
+
+      await Future.delayed(const Duration(milliseconds: 100));
+
+      if (user != null) {
+        emit(UserLoggedState(user: user));
+      } else {
+        emit(UserNotLoggedState());
+      }
+    });
+
     on<LoginUserEvent>((event, emit) async {
       emit(UserLoading());
 
@@ -25,15 +42,21 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
       if (response is User) {
         emit(UserLoggedState(user: response));
+
+        // Save User To Local Storage
+        SaveUserLocalUsecase saveUserLocalUsecase =
+            SaveUserLocalUsecase(userRepoImpl);
+        await saveUserLocalUsecase.call(response);
       } else {
         emit(UserErrorState(helperResponse: response));
       }
     });
 
-    // on<LogoutEvent>((event, emit) {
-    //   UserServices.logoutUserService();
-    //   deleteUserFromLocal();
-    //   emit(UserNotLoggedState());
-    // });
+    on<LogoutEvent>((event, emit) async {
+      RemoveUserFromLocalUsecase removeUserFromLocalUsecase =
+          RemoveUserFromLocalUsecase(userRepoImpl);
+      removeUserFromLocalUsecase.call();
+      emit(UserNotLoggedState());
+    });
   }
 }

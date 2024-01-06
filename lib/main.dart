@@ -1,3 +1,4 @@
+import 'package:file_manager/features/auth/presentation/bloc/user/user_bloc.dart';
 import 'package:file_manager/utility/app_bloc_observer.dart';
 import 'package:file_manager/utility/constant_logic_validations.dart';
 import 'package:file_manager/utility/dependency_injection/injection_container.dart';
@@ -6,25 +7,26 @@ import 'package:file_manager/utility/theme/app_style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await initGlobalGetIt();
   Bloc.observer = MyBlocObserver();
 
-  runApp(MyApp(appRouter: AppRouter()),);
+  runApp(
+    MyApp(appRouter: AppRouter()),
+  );
 }
 
 class MyApp extends StatelessWidget {
   AppRouter appRouter;
-  MyApp({required this.appRouter,super.key});
+  MyApp({required this.appRouter, super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-      value: globalUserBloc,
+      value: globalUserBloc..add(CheckUserFromLocalStorage()),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: AppStyle.theme,
