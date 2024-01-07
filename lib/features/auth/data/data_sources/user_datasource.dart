@@ -53,4 +53,23 @@ class UserDataSource{
     }
     return helperResponse;
   }
+  Future signupDataSource(SignUpEvent signUpEvent) async {
+    HelperResponse helperResponse = await NetworkHelpers.postDataHelper(
+      url: EndPoints.signup,
+      body: json.encode({
+        "email": signUpEvent.email,
+        "password": signUpEvent.password,
+        "fullName": signUpEvent.fullName
+      }),
+    );
+    if (helperResponse.servicesResponse == ServicesResponseStatues.success) {
+      try {
+        return userFromJson(helperResponse.response);
+      } catch (e) {
+        return helperResponse.copyWith(
+            servicesResponse: ServicesResponseStatues.modelError);
+      }
+    }
+    return helperResponse;
+  }
 }

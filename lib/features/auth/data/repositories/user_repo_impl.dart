@@ -12,7 +12,9 @@ class UserRepoImpl extends UserRepo {
   Future login(LoginUserEvent loginUserEvent) async {
     return userDataSource.loginUserDataSource(loginUserEvent);
   }
-
+  Future signup(SignUpEvent signUpEvent) async {
+    return userDataSource.signupDataSource(signUpEvent);
+  }
   @override
   Future logout() {
     // TODO: implement logout

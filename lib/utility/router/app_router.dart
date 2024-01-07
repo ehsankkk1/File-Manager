@@ -1,3 +1,4 @@
+import 'package:file_manager/features/auth/presentation/pages/signup_screen.dart';
 import 'package:file_manager/features/file_feature/domain/entities/file_entity.dart';
 import 'package:file_manager/features/file_feature/presentation/bloc/file_action_bloc/file_action_bloc.dart';
 import 'package:file_manager/features/file_feature/presentation/bloc/file_list_bloc/file_bloc.dart';
@@ -24,6 +25,8 @@ class AppRouter {
 
         case AppRoutes.login:
           return const LoginScreen();
+        case AppRoutes.signUp:
+          return const SignupScreen();
 
         case AppRoutes.filesListScreen:
           FileEvent args = settings.arguments as FileEvent;
