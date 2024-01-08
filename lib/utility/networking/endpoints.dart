@@ -1,8 +1,8 @@
 class EndPoints {
   // my wifi ip address
 
-  static const String kMainUrl = "http://192.168.1.108:3333";
-  static const String kMainUrlAssets = "http://192.168.1.108:3333";
+  static const String kMainUrl = "http://192.168.134.228:3333";
+  static const String kMainUrlAssets = "http://192.168.134.228:3333";
   static const String login = "/auth/signin";
   static const String signup = "/auth/signup";
   static const String folderCanAccess = "/folders/can-access";
@@ -12,6 +12,10 @@ class EndPoints {
   static String editFile(int folderId, int fileId) =>
       "/folders/$folderId/files/$fileId";
 
+
+
+  static String checkInMultipleFiles(int folderId) =>
+      "/folders/$folderId/files/checkin-files";
   static String checkInFile(int folderId, int fileId) =>
       "/folders/$folderId/files/$fileId/checkin";
   static String checkOutFile(int folderId, int fileId) =>

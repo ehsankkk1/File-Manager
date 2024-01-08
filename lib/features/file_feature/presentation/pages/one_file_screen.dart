@@ -177,15 +177,18 @@ class OneFileScreen extends StatelessWidget {
                                   builder: (BuildContext context) {
                                     return BlocProvider(
                                       create: (context) => FileActionBloc(),
-                                      child: BlocListener<FileActionBloc, FileActionState>(
+                                      child: BlocListener<FileActionBloc,
+                                          FileActionState>(
                                         listener: (context, state) {
-                                          if (state is FileActionResponseState) {
-                                            DialogsWidgetsSnackBar.showSnackBarFromStatus(
-                                              context: context,
-                                              helperResponse: state.helperResponse,
-                                              popOnSuccess: true,
-                                              popBeforeMessage: true
-                                            );
+                                          if (state
+                                              is FileActionResponseState) {
+                                            DialogsWidgetsSnackBar
+                                                .showSnackBarFromStatus(
+                                                    context: context,
+                                                    helperResponse:
+                                                        state.helperResponse,
+                                                    popOnSuccess: true,
+                                                    popBeforeMessage: true);
                                           }
                                         },
                                         child: AddFileDialogWidget(

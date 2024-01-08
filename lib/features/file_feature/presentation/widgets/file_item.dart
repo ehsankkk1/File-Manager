@@ -9,12 +9,19 @@ import '../../domain/entities/file_entity.dart';
 import '../bloc/file_list_bloc/file_bloc.dart';
 
 class FileItemWidget extends StatelessWidget {
-  FileItemWidget({required this.event,required this.fileEntity, Key? key, required this.index})
+  FileItemWidget(
+      {required this.onChange,
+      required this.value,
+      required this.event,
+      required this.fileEntity,
+      Key? key,
+      required this.index})
       : super(key: key);
   FileEntity fileEntity;
   FileEvent event;
   int index;
-
+  bool value;
+  Function(bool?)? onChange;
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -39,8 +46,7 @@ class FileItemWidget extends StatelessWidget {
       onPressed: () {
         Navigator.of(context)
             .pushNamed(AppRoutes.oneFilesScreen, arguments: fileEntity)
-            .then((value) => context.read<FileBloc>().add(event)
-        );
+            .then((value) => context.read<FileBloc>().add(event));
       },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -48,6 +54,7 @@ class FileItemWidget extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              Checkbox(value: value, onChanged: onChange),
               CircleAvatar(
                 backgroundColor: fileEntity.isAvailable
                     ? AppColors.kGreenColor

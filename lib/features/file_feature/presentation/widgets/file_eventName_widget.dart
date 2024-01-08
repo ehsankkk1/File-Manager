@@ -49,9 +49,18 @@ class FileEventNameWidget extends StatelessWidget {
               SizedBox(
                 width: screenWidth * 0.02,
               ),
-              Text(
-                eventNameValuesUI.reverse[fileEventEntity.eventName] ?? '',
-                style: AppFontStyles.mediumH3,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    eventNameValuesUI.reverse[fileEventEntity.eventName] ?? '',
+                    style: AppFontStyles.mediumH3,
+                  ),
+                  Text(
+                    fileEventEntity.user.email,
+                    style: AppFontStyles.mediumH3,
+                  ),
+                ],
               ),
             ],
           ),

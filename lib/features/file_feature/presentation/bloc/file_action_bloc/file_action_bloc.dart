@@ -10,6 +10,7 @@ import 'package:file_manager/utility/networking/network_helper.dart';
 import '../../../data/data_sources/file_datasource.dart';
 import '../../../data/repositories/file_repo_impl.dart';
 import '../../../domain/use_cases/file_action_usecase.dart';
+import '../../../domain/use_cases/send_checkInMultiple_files_usecase.dart';
 
 part 'file_action_event.dart';
 part 'file_action_state.dart';
@@ -28,6 +29,17 @@ class FileActionBloc extends Bloc<FileActionEvent, FileActionState> {
 
       emit(FileActionResponseState(helperResponse: response));
     });
+
+    on<SendCheckInMultipleFilesEvent>((event, emit) async {
+      emit(FileActionLoadingState());
+
+      CheckInMultipleFilesUseCase useCase = CheckInMultipleFilesUseCase(fileRepoImpl);
+
+      final response = await useCase.call(event);
+
+      emit(FileActionResponseState(helperResponse: response));
+    });
+
     on<AddEditFileActionEvent>((event, emit) async {
       emit(FileActionLoadingState());
 

@@ -38,4 +38,9 @@ class FileRepoImpl extends FileRepo {
     return await fileDataSource.editFileDataSource(event: event);
 
   }
+
+  @override
+  Future sendCheckInMultipleFilesPatchRequestRepo(SendCheckInMultipleFilesEvent event) async{
+    return await fileDataSource.checkInMultipleFilesDataSource(event: event);
+  }
 }

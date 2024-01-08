@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:file_manager/features/file_feature/presentation/bloc/file_action_bloc/file_action_bloc.dart';
 import 'package:file_manager/features/file_feature/presentation/bloc/file_list_bloc/file_bloc.dart';
 import 'package:file_manager/utility/networking/network_helper.dart';
@@ -85,6 +87,18 @@ class FileDataSource {
       crud: "DELETE",
       url: EndPoints.deleteFile(event.folderId, event.fileId),
       useUserToken: true,
+    );
+
+    return helperResponse;
+  }
+  Future checkInMultipleFilesDataSource({
+    required SendCheckInMultipleFilesEvent event,
+  }) async {
+    HelperResponse helperResponse = await NetworkHelpers.postDataHelper(
+      crud: "PATCH",
+      url: EndPoints.checkInMultipleFiles(event.folderId),
+      useUserToken: true,
+      body: json.encode({"filesIds" : event.fileIds})
     );
 
     return helperResponse;

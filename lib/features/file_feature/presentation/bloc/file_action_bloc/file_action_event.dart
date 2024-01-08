@@ -16,6 +16,17 @@ class SendFileNewActionEvent extends FileActionEvent {
   @override
   List<Object?> get props => [fileEventName, fileId,folderId];
 }
+class SendCheckInMultipleFilesEvent extends FileActionEvent {
+  SendCheckInMultipleFilesEvent(
+      {
+        required this.folderId,
+        required this.fileIds,
+      });
+  int folderId;
+  List<int> fileIds;
+  @override
+  List<Object?> get props => [ fileIds,folderId];
+}
 class AddEditFileActionEvent extends FileActionEvent {
   AddEditFileActionEvent(
       {required this.fileEventName,

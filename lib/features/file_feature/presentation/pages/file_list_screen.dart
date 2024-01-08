@@ -23,7 +23,6 @@ class FileListScreen extends StatefulWidget {
 class _FileListScreenState extends State<FileListScreen> {
   void refresh(){
     context.read<FileBloc>().add(widget.fileEvent);
-
   }
   @override
   Widget build(BuildContext context) {

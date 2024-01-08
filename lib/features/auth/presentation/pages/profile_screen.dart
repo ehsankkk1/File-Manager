@@ -22,7 +22,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         builder: (context, state) {
           if (state is UserLoggedState) {
             return ListView(
-              padding: EdgeInsets.all(50),
+              padding: const EdgeInsets.all(50),
               children: [
                 const Icon(
                   Icons.account_circle_rounded,
@@ -32,6 +32,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Center(
                   child: Text(
                     state.user.email,
+                    style: AppFontStyles.boldH1,
+                  ),
+                ),
+                Center(
+                  child: Text(
+                    state.user.fullName,
                     style: AppFontStyles.boldH1,
                   ),
                 ),

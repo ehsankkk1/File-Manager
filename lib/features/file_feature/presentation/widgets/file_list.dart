@@ -1,3 +1,5 @@
+import 'package:file_manager/features/file_feature/presentation/bloc/file_action_bloc/file_action_bloc.dart';
+import 'package:file_manager/utility/dialogs_and_snackbars/dialogs_snackBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,45 +32,13 @@ class _FileListState extends State<FileList> {
     context.read<FileBloc>().add(widget.event);
   }
 
+  List<int> checkInFilesIds = [];
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     return BlocBuilder<FileBloc, FileState>(builder: (context, state) {
-      if (state is FileDoneState) {
-        if (state.files.isEmpty) {
-          return SomethingWrongWidget(
-            title: "No Files found !",
-            svgPath: Assets.imagesSearch,
-            elevatedButtonWidget: ElevatedButtonWidget(
-              title: "Refresh",
-              onPressed: () {
-                search();
-              },
-            ),
-          );
-        }
-        return RefreshIndicator(
-          onRefresh: () async {
-            search();
-          },
-          child: ListView.builder(
-              controller: scrollController,
-              itemCount: state.files.length,
-              itemBuilder: (BuildContext context, int index) {
-                return RefreshIndicator(
-                  onRefresh: () async {
-                    search();
-                  },
-                  child: FileItemWidget(
-                    fileEntity: state.files[index],
-                    index: index,
-                    event: widget.event,
-                  ),
-                );
-              }),
-        );
-      }
       if (state is FileInitial) {
         return ListView.builder(
             controller: scrollController,
@@ -99,6 +69,82 @@ class _FileListState extends State<FileList> {
                 ),
               );
             });
+      }
+      if (state is FileDoneState) {
+        if (state.files.isEmpty) {
+          return SomethingWrongWidget(
+            title: "No Files found !",
+            svgPath: Assets.imagesSearch,
+            elevatedButtonWidget: ElevatedButtonWidget(
+              title: "Refresh",
+              onPressed: () {
+                search();
+              },
+            ),
+          );
+        }
+        return RefreshIndicator(
+          onRefresh: () async {
+            search();
+          },
+          child: ListView.builder(
+              controller: scrollController,
+              itemCount: state.files.length + 1,
+              itemBuilder: (BuildContext context, int index) {
+                if (index >= state.files.length) {
+                  if (checkInFilesIds.isEmpty) {
+                    return const SizedBox();
+                  }
+                  return BlocProvider(
+                    create: (context) => FileActionBloc(),
+                    child: BlocConsumer<FileActionBloc, FileActionState>(
+                      listener: (context, state) {
+                        if (state is FileActionResponseState) {
+                          DialogsWidgetsSnackBar.showSnackBarFromStatus(
+                              context: context,
+                              helperResponse: state.helperResponse,
+                            popOnSuccess: false,
+                          );
+                          search();
+                          checkInFilesIds = [];
+                        }
+                      },
+                      builder: (context, state) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                          child: ElevatedButtonWidget(
+                            title: "Check in ${checkInFilesIds.length} Files",
+                            isLoading: state is FileActionLoadingState,
+                            onPressed: () {
+                              context.read<FileActionBloc>().add(
+                                  SendCheckInMultipleFilesEvent(
+                                      folderId: widget.event.folderId,
+                                      fileIds: checkInFilesIds));
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                }
+                return FileItemWidget(
+                  fileEntity: state.files[index],
+                  index: index,
+                  event: widget.event,
+                  value: checkInFilesIds.contains(state.files[index].id),
+                  onChange: (value) {
+                    setState(() {
+                      if (value == true) {
+                        checkInFilesIds.add(state.files[index].id);
+                      } else {
+                        checkInFilesIds.removeWhere(
+                            (element) => element == state.files[index].id);
+                      }
+                    });
+                  },
+                );
+              }),
+        );
       }
       return SomethingWrongWidget(
         helperResponse: (state as FileErrorState).helperResponse,
