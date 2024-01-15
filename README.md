@@ -17,18 +17,18 @@ A Flutter-based file management application with a clean architecture, utilizing
 # Screenshots
 
 ## Auth Feature
-![Screenshot_1705318424](https://github.com/ehsankkk1/File-Manager-Flutter/assets/102434828/bea5840c-6290-4435-98c0-a04f971ff4ba)
-![Screenshot_1705318422](https://github.com/ehsankkk1/File-Manager-Flutter/assets/102434828/c83d1b0a-d5bd-41b9-a694-67084aa35335)
+<img src="https://github.com/ehsankkk1/File-Manager-Flutter/assets/102434828/bea5840c-6290-4435-98c0-a04f971ff4ba" width="300" >
+<img src="https://github.com/ehsankkk1/File-Manager-Flutter/assets/102434828/c83d1b0a-d5bd-41b9-a694-67084aa35335" width="300" >
 
 ## Files Feature
-![Screenshot_1705318395](https://github.com/ehsankkk1/File-Manager-Flutter/assets/102434828/4d39c922-777b-42cc-a71b-84abf3795d8b)
-![Screenshot_1705318397](https://github.com/ehsankkk1/File-Manager-Flutter/assets/102434828/c70b4e79-3156-4ca6-ba62-a54cf6d268b3)
-![Screenshot_1705318403](https://github.com/ehsankkk1/File-Manager-Flutter/assets/102434828/45eda6f1-c7e1-4789-b833-09de00ec5176)
-![Screenshot_1705318405](https://github.com/ehsankkk1/File-Manager-Flutter/assets/102434828/fafa953f-8927-40bc-8a4d-ceb8e65666fc)
+<img src="https://github.com/ehsankkk1/File-Manager-Flutter/assets/102434828/4d39c922-777b-42cc-a71b-84abf3795d8b" width="300" >
+<img src="https://github.com/ehsankkk1/File-Manager-Flutter/assets/102434828/c70b4e79-3156-4ca6-ba62-a54cf6d268b3" width="300" >
+<img src="https://github.com/ehsankkk1/File-Manager-Flutter/assets/102434828/45eda6f1-c7e1-4789-b833-09de00ec5176" width="300" >
+<img src="https://github.com/ehsankkk1/File-Manager-Flutter/assets/102434828/fafa953f-8927-40bc-8a4d-ceb8e65666fc" width="300" >
 
 ## Folder Feature
-![Screenshot_1705318410](https://github.com/ehsankkk1/File-Manager-Flutter/assets/102434828/bc9c48d5-465b-402c-8793-e51815b5633e)
-![Screenshot_1705318416](https://github.com/ehsankkk1/File-Manager-Flutter/assets/102434828/80ebebb6-b4a0-48fb-aa25-d159885e7e79)
+<img src="https://github.com/ehsankkk1/File-Manager-Flutter/assets/102434828/bc9c48d5-465b-402c-8793-e51815b5633e" width="300" >
+<img src="https://github.com/ehsankkk1/File-Manager-Flutter/assets/102434828/80ebebb6-b4a0-48fb-aa25-d159885e7e79"width="300" >
 
 
 CONTRIBUTORS:
